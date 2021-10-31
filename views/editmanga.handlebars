@@ -1,0 +1,13 @@
+<h1>Edite o seu manga:</h1>
+<form action="/mangas/updatemanga" method="POST" class="form">
+    <input type="hidden" name="id" value="{{manga.id}}">
+    <div class="form-control">
+        <label for="title">Título</label>
+        <input type="text" name="title" placeholder="Digite o título" value="{{manga.title}}">
+    </div>
+    <div class="form-control">
+        <label for="pageqty">Número de páginas</label>
+        <input type="number" name="pageqty" placeholder="Quantas páginas o livro tem?" value="{{manga.pageqty}}">
+    </div>
+    <input type="submit" value="Editar">
+</form>

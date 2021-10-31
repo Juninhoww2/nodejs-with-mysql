@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.4",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.14"
+  },
+  "name": "nodejs-with-mysql",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./index.js localhost 4000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Juninhoww2/nodejs-with-mysql.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Juninhoww2/nodejs-with-mysql/issues"
+  },
+  "homepage": "https://github.com/Juninhoww2/nodejs-with-mysql#readme"
+}

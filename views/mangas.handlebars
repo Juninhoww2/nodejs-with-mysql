@@ -1,0 +1,11 @@
+<h1>Mangas disponíveis: </h1>
+<div class="mangas-container">
+    <a href="/">Adicionar manga</a>
+    {{#each mangas}}
+    <div>
+        #{{this.id}} - 
+        <span class="bold"><a href="/mangas/{{this.id}}">{{this.title}}</a></span> 
+        - {{this.pageqty}} páginas
+    </div>
+    {{/each}}
+</div>

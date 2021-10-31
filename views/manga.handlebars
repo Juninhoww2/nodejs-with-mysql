@@ -1,0 +1,13 @@
+<div id="manga-page">
+    <a href="/mangas">Voltar</a>
+    <div class="container">
+        <h1>{{manga.title}}</h1>
+        <p>Este livro tem {{manga.pageqty}} páginas.</p>
+        <div class="actions">
+            <a href="/mangas/edit/{{manga.id}}">Editar</a>
+            <form action="/mangas/remove/{{manga.id}}" method="POST">
+                <input type="submit" value="Remover">
+            </form>
+        </div>
+    </div>
+</div>
