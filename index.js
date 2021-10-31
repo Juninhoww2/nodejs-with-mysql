@@ -1,8 +1,10 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-const mysql = require('mysql')
+const pool = require('./db/conn')
 
 const app = express()
+
+console.log(pool)
 
 app.use(
     express.urlencoded({
@@ -21,28 +23,28 @@ app.get('/', (req, res) => {
     res.render('home')
 })
 
-app.post('/mangas/insertmanga', function (req, res) {
+app.post('/mangas/insertmanga', (req, res) => {
     const title = req.body.title
     const pageqty = req.body.pageqty
 
-    const query = `INSERT INTO mangas (title, pageqty) VALUES ('${title}', ${pageqty})`
+    const sql = `INSERT INTO mangas (title, pageqty) VALUES ('${title}' ,'${pageqty}')`
 
-    conn.query(query, function (err) {
-        if(err) {
-            console.log(err)
-        }
-
-        res.redirect('/')
-    }) 
-})
-
-app.get('/mangas', function (req, res) {
-    const query = "SELECT * FROM mangas"
-
-    conn.query(query, function (err, data) {
+    pool.query(sql, function (err) {
         if(err) {
             console.log(err)
             return
+        }
+
+        res.redirect('/mangas')
+    }) 
+})
+
+app.get('/mangas', (req, res) => {
+    const sql = 'SELECT * FROM mangas'
+
+    pool.query(sql, function (err, data) {
+        if(err) {
+            console.log(err)
         }
 
         const mangas = data
@@ -55,10 +57,10 @@ app.get('/mangas', function (req, res) {
 
 app.get('/mangas/:id', (req, res) => {
     const id = req.params.id
-
+    
     const sql = `SELECT * FROM mangas WHERE id = ${id}`
 
-    conn.query(sql, function (err, data) {
+    pool.query(sql, function (err, data) {
         if(err) {
             console.log(err)
             return
@@ -75,13 +77,14 @@ app.get('/mangas/edit/:id', (req, res) => {
 
     const sql = `SELECT * FROM mangas WHERE id = ${id}`
 
-    conn.query(sql, function(err, data) {
+    pool.query(sql, function (err, data) {
         if(err) {
             console.log(err)
-            return
         }
 
         const manga = data[0]
+
+        console.log(data[0])
 
         res.render('editmanga', { manga })
     })
@@ -94,7 +97,7 @@ app.post('/mangas/updatemanga', (req, res) => {
 
     const sql = `UPDATE mangas SET title = '${title}', pageqty = '${pageqty}' WHERE id = ${id}`
 
-    conn.query(sql, function(err) {
+    pool.query(sql, function(err) {
         if(err) {
             console.log(err)
             return 
@@ -109,29 +112,13 @@ app.post('/mangas/remove/:id', (req, res) => {
     const id = req.params.id
     const sql = `DELETE FROM mangas WHERE id = ${id}`
 
-    conn.query(sql, function(err) {
+    pool.query(sql, function(err) {
         if(err) {
             console.log(err)
-            return
         }
 
         res.redirect('/mangas')
     })
 })
 
-const conn = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: '',
-    database: 'nodemysql2'
-})
-
-conn.connect(function (err) {
-    if(err) {
-        console.log(err)
-    }
-
-    console.log('Conectou ao MySQL!')
-
-    app.listen(4000)
-})
+app.listen(4000)
